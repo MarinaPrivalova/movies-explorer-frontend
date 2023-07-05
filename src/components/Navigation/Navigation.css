@@ -1,0 +1,32 @@
+.header__navigation {}
+
+.header__btn-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-right: 70px;
+}
+
+.header__link {
+  color: #fff;
+  font-style: normal;
+  text-decoration: none;
+}
+
+.header__link_logout {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.header__button {
+  border-radius: 3px;
+  border: none;
+  background-color: #3ddc84;
+  color: #000;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
