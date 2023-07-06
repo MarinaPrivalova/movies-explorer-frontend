@@ -1,44 +1,55 @@
-.header__navigation {}
+.navigation {}
 
-.header__btn-container {
+.navigation__btn-container {
   display: flex;
   align-items: center;
   gap: 30px;
   margin-right: 70px;
+  list-style: none;
+  padding: 0;
 }
 
 @media screen and (max-width: 875px) {
-  .header__btn-container {
+  .navigation__btn-container {
     margin-right: 30px;
   }
 }
 
 @media screen and (max-width: 565px) {
-  .header__btn-container {
+  .navigation__btn-container {
     margin-right: 14px;
     gap: 14px;
   }
 }
 
-.header__link {
+.navigation__menu {
+  display: flex;
+  margin-right: 70px;
+}
+
+.navigation__account-menu {
+  margin-left: 50px;
+}
+
+.navigation__link {
   color: #fff;
   font-style: normal;
   text-decoration: none;
 }
 
-.header__link_logout {
+.navigation__link_logout {
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
 }
 
 @media screen and (max-width: 565px) {
-  .header__link_logout {
+  .navigation__link_logout {
     font-size: 10px;
   }
 }
 
-.header__button {
+.navigation__button {
   border-radius: 3px;
   border: none;
   background-color: #3ddc84;
@@ -48,11 +59,16 @@
   line-height: 16px;
   padding: 8px 20px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 565px) {
-  .header__button {
+  .navigation__button {
     font-size: 10px;
     padding: 5px 12px;
   }
+}
+
+.navigation__menu {
+
 }

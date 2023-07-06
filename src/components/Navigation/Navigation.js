@@ -1,15 +1,29 @@
-import React from "react";
+import React from 'react';
 import './Navigation.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 
-function Navigation() {
+function Navigation({ loggedIn }) {
+
+  const navigationClass = (`navigation ${loggedIn ? '' : 'navigation_logout'}`);
+
   return (
-    <nav className="header__navigation">
-      <div className="header__btn-container">
-        <NavLink to='/signup' className="header__link header__link_logout">Регистрация</NavLink>
-        <NavLink className="header__link" to="/signin"><button className='header__button'>Войти</button></NavLink>
-      </div>
+    <nav className={navigationClass}>
+
+      {!loggedIn && <div className="navigation__menu">
+        <NavLink to='/movies' className="navigation__title navigation__title_active">Фильмы</NavLink>
+        <NavLink to='/saved-movies' className="navigation__title">Сохранённые фильмы</NavLink>
+        <div className="navigation__account-menu">
+          <NavLink to='/profile' className="navigation__link navigation__link_logged">Аккаунт</NavLink>
+          <NavLink to='/profile' className="navigation__button navigation__button_logged"></NavLink>
+        </div>
+      </div>}
+
+      {loggedIn && <div className="navigation__btn-container">
+        <NavLink to='/signup' className="navigation__link navigation__link_logout">Регистрация</NavLink>
+        <NavLink to='/signin' className="navigation__button navigation__button_logout">Войти</NavLink>
+      </div>}
+
     </nav>
   );
 }

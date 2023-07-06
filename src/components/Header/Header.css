@@ -2,12 +2,19 @@
   width: 100%;
   margin: 0 auto;
   padding: 18px 0;
-  background-color: #073042;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   max-width: 1280px;
+}
+
+.header_main {
+  background-color: #073042;
+}
+
+.header_movie {
+  background-color: #202020;
 }
 
 .header__logo {

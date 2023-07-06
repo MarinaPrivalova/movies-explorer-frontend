@@ -84,7 +84,7 @@
 
 @media screen and (max-width: 565px) {
   .aboutme__discription {
-    max-width: 292px;
+    width: 100%;
     margin-right: 0;
   }
 }
@@ -185,8 +185,8 @@
 
 @media screen and (max-width: 565px) {
   .aboutme__avatar {
-    width: 292px;
-    max-height: 352px;
+    max-width: 292px;
+    height: 352px;
     margin-bottom: 40px;
   }
 }

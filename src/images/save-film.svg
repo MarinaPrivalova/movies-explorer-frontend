@@ -1,0 +1,19 @@
+<svg width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg" style=""><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none"/>
+
+<defs>
+<filter id="filter0_d_39757_32721" x="0" y="0" width="28" height="28" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3"/>
+<feGaussianBlur stdDeviation="3"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_39757_32721"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_39757_32721" result="shape"/>
+</filter>
+</defs>
+<g class="currentLayer" style=""><title>Layer 1</title><g id="save8d" class="">
+<g id="icon__COLOR:special-10" filter="url(#filter0_d_39757_32721)">
+<rect x="6" y="6.137254953384399" width="16" height="16" rx="8" fill="#313131" id="svg_1"/>
+</g>
+<path id="icon__COLOR:invisible" fill-rule="evenodd" clip-rule="evenodd" d="M14,20.1372549533844 C17.3137,20.1372549533844 20,17.4509549533844 20,14.1372549533844 C20,10.823544953384399 17.3137,8.1372549533844 14,8.1372549533844 C10.6863,8.1372549533844 8,10.823544953384399 8,14.1372549533844 C8,17.4509549533844 10.6863,20.1372549533844 14,20.1372549533844 zM14,22.1372549533844 C18.4183,22.1372549533844 22,18.5555549533844 22,14.1372549533844 C22,9.7189749533844 18.4183,6.137254953384399 14,6.137254953384399 C9.58172,6.137254953384399 6,9.7189749533844 6,14.1372549533844 C6,18.5555549533844 9.58172,22.1372549533844 14,22.1372549533844 z" fill="white"/>
+</g></g></svg>
