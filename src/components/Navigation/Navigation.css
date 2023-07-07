@@ -84,6 +84,7 @@
 
 .navigation__burger {
   background: url("../../images/icon_burger.svg") transparent no-repeat center;
+  background-size: contain;
   width: 44px;
   height: 44px;
   padding: 0;
@@ -104,7 +105,7 @@
   }
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 800px) {
   .navigation__menu {
     display: none;
   }
@@ -163,10 +164,13 @@
   .navigation__title-sidebar:first-of-type {
     padding-top: 0;
   }
+  .navigation__title-sidebar:last-of-type {
+    padding-bottom: 621px;
+  }
   .navigation__title-sidebar_active {
     text-decoration: underline;
     text-decoration-thickness: 2px;
-    color: #FFF;
+    color: #fff;
   }
   .navigation__link-sidebar {
     text-decoration: none;
@@ -178,20 +182,20 @@
   .navigation__account-sidebar {
     display: flex;
     padding: 0;
+    padding-bottom: 92px;
     margin: 0;
     align-items: center;
     justify-content: center;
-    padding-bottom: 92px;
   }
   .navigation__button-close {
     position: absolute;
     width: 22px;
     height: 22px;
-    top: 22px;
-    right: 22px;
-    background: url("../../images/close-burger.svg") no-repeat center transparent;
+    top: 27px;
+    right: 27px;
+    background: url("../../images/close-burger.svg") no-repeat center
+      transparent;
     border: none;
-    background-size: cover;
     cursor: pointer;
     padding: 0;
   }
@@ -211,22 +215,27 @@
   }
   .navigation__burger {
     margin-right: 14px;
+    width: 40px;
+    height: 43px;
   }
   .navigation__content-sidebar {
     width: 100%;
   }
   .navigation__button-close {
-    top: 13px;
-    right: 13px;
+    top: 16px;
+    right: 19px;
   }
   .navigation__menu-sidebar {
     padding-top: 144px;
   }
-  .navigation__account-sidebar {
-    padding-bottom: 55px;
-  }
   .navigation__title-sidebar {
     padding-top: 24px;
+  }
+  .navigation__title-sidebar:last-of-type {
+    padding-bottom: 444px;
+  }
+  .navigation__account-sidebar {
+    padding-bottom: 48px;
   }
   .navigation__button_logged {
     padding: 0;

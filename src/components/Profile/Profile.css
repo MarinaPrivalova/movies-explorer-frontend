@@ -97,9 +97,9 @@
   padding-top: 16px;
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 800px) {
   .profile__greetings {
-    margin-top: 236px;
+    margin-top: 230px;
   }
   .profile__user {
     padding-top: 96px;
@@ -112,7 +112,7 @@
 
 @media screen and (max-width: 500px) {
   .profile__greetings {
-    margin-top: 70px;
+    margin-top: 64px;
   }
   .profile__user {
     padding-top: 80px;

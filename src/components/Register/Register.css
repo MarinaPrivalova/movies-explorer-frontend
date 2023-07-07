@@ -156,10 +156,9 @@
   line-height: normal;
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 800px) {
   .authorization {
-    margin-top: 232px;
-    margin-bottom: 232px;
+    margin: 232px auto;
   }
 }
 

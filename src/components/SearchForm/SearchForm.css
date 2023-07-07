@@ -35,7 +35,7 @@
 
 .movies__btn {
   margin: 0;
-  padding: 8px 10px;
+  padding: 8px 13px;
   max-width: 59px;
   color: #fff;
   text-align: center;
@@ -93,10 +93,10 @@
   background-image: url("../../images/smalltumboff-noactive.svg");
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 800px) {
   .movies__form {
     max-width: calc(100% - 2 * 30px);
-    margin: 80px auto 61px;
+    margin: 74px auto 61px;
   }
   .movies__input-container {
     margin-bottom: 30px;
@@ -116,10 +116,10 @@
 @media screen and (max-width: 400px) {
   .movies__form {
     max-width: calc(100% - 2 * 14px);
-    margin: 90px auto 51px;
+    margin: 81px auto 51px;
   }
   .movies__input-container {
-    margin-bottom: 41px;
+    margin-bottom: 38px;
   }
   .movies__input {
     padding-bottom: 15px;

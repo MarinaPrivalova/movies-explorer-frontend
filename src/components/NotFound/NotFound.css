@@ -9,7 +9,7 @@
 }
 
 .notfound__title {
-  margin: 246px auto 5px;
+  margin: 245px auto 4px;
   font-size: 140px;
   font-weight: 400;
   line-height: normal;
@@ -35,9 +35,9 @@
   background-color: transparent;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .notfound__title {
-    margin-top: 408px;
+    margin-top: 407px;
   }
   .notfound__button {
     margin: 184px auto 222px;
@@ -54,5 +54,6 @@
   }
   .notfound__button {
     margin: 284px auto 30px;
+    font-size: 12px;
   }
 }

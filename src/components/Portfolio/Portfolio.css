@@ -52,7 +52,7 @@
     margin-right: 50px;
   }
   .portfolio__link:last-of-type {
-    margin-bottom: calc(90px - 41px);
+    margin-bottom: calc(90px - 19px);
   }
   .portfolio__subtitle {
     font-size: 28px;
@@ -74,6 +74,9 @@
   .portfolio__link {
     margin-left: 14px;
     margin-right: 14px;
+  }
+  .portfolio__link:last-of-type {
+    margin-bottom: calc(70px - 19px);
   }
   .portfolio__subtitle {
     font-size: 18px;
