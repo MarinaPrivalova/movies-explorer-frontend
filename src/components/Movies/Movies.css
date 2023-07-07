@@ -22,6 +22,7 @@
   font-weight: 500;
   line-height: normal;
   align-self: center;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

@@ -1,4 +1,8 @@
-.navigation {}
+.navigation {
+}
+
+.navigation_logout {
+}
 
 .navigation__btn-container {
   display: flex;
@@ -8,27 +12,33 @@
   list-style: none;
   padding: 0;
 }
-
-@media screen and (max-width: 875px) {
-  .navigation__btn-container {
-    margin-right: 30px;
-  }
-}
-
-@media screen and (max-width: 565px) {
-  .navigation__btn-container {
-    margin-right: 14px;
-    gap: 14px;
-  }
-}
-
 .navigation__menu {
   display: flex;
+  align-items: center;
   margin-right: 70px;
 }
 
 .navigation__account-menu {
   margin-left: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.navigation__title {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.navigation__title:last-of-type {
+  margin-right: 0;
+}
+
+.navigation__title_active {
+  font-weight: 500;
 }
 
 .navigation__link {
@@ -43,10 +53,11 @@
   line-height: 16px;
 }
 
-@media screen and (max-width: 565px) {
-  .navigation__link_logout {
-    font-size: 10px;
-  }
+.navigation__link_logged {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  margin-right: 13px;
 }
 
 .navigation__button {
@@ -62,13 +73,162 @@
   text-decoration: none;
 }
 
+.navigation__button_logged {
+  background: url(../../images/icon_account.svg) #313131 no-repeat center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: block;
+  padding: 0;
+}
+
+.navigation__burger {
+  background: url("../../images/icon_burger.svg") transparent no-repeat center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  display: none;
+  cursor: pointer;
+  margin-right: 30px;
+}
+
+.navigation__sidebar {
+  display: none;
+}
+
+@media screen and (max-width: 875px) {
+  .navigation__btn-container {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .navigation__menu {
+    display: none;
+  }
+  .navigation__burger {
+    display: block;
+  }
+  .navigation__sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .navigation__sidebar_opened {
+    visibility: visible;
+    opacity: 1;
+  }
+  .navigation__content-sidebar {
+    background-color: #202020;
+    box-sizing: border-box;
+    margin: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 68%;
+    position: fixed;
+    top: 0;
+    right: 0;
+  }
+  .navigation__menu-sidebar {
+    list-style: none;
+    padding: 0;
+    padding-top: 159px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .navigation__title-sidebar {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    padding-top: 28px;
+  }
+  .navigation__title-sidebar:first-of-type {
+    padding-top: 0;
+  }
+  .navigation__title-sidebar_active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    color: #FFF;
+  }
+  .navigation__link-sidebar {
+    text-decoration: none;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+  .navigation__account-sidebar {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 92px;
+  }
+  .navigation__button-close {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    top: 22px;
+    right: 22px;
+    background: url("../../images/close-burger.svg") no-repeat center transparent;
+    border: none;
+    background-size: cover;
+    cursor: pointer;
+    padding: 0;
+  }
+}
+
 @media screen and (max-width: 565px) {
+  .navigation__btn-container {
+    margin-right: 14px;
+    gap: 14px;
+  }
+  .navigation__link_logout {
+    font-size: 10px;
+  }
   .navigation__button {
     font-size: 10px;
     padding: 5px 12px;
   }
-}
-
-.navigation__menu {
-
+  .navigation__burger {
+    margin-right: 14px;
+  }
+  .navigation__content-sidebar {
+    width: 100%;
+  }
+  .navigation__button-close {
+    top: 13px;
+    right: 13px;
+  }
+  .navigation__menu-sidebar {
+    padding-top: 144px;
+  }
+  .navigation__account-sidebar {
+    padding-bottom: 55px;
+  }
+  .navigation__title-sidebar {
+    padding-top: 24px;
+  }
+  .navigation__button_logged {
+    padding: 0;
+  }
 }
