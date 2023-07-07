@@ -89,9 +89,37 @@
   background-color: transparent;
 }
 
-.profile__btn_edit {}
+.profile__btn_edit {
+}
 
 .profile__btn_checkout {
-  color: #EE3465;
+  color: #ee3465;
   padding-top: 16px;
+}
+
+@media screen and (max-width: 769px) {
+  .profile__greetings {
+    margin-top: 236px;
+  }
+  .profile__user {
+    padding-top: 96px;
+    padding-bottom: 210px;
+  }
+  .profile__btns {
+    padding-bottom: 269px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile__greetings {
+    margin-top: 70px;
+  }
+  .profile__user {
+    padding-top: 80px;
+    padding-bottom: 379px;
+    max-width: 260px;
+  }
+  .profile__btns {
+    padding-bottom: 40px;
+  }
 }

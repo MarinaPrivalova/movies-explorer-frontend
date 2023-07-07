@@ -32,3 +32,10 @@ a:hover {
   height: 1px;
   background: #dadada;
 }
+
+@media screen and (max-width: 565px) {
+  .section-title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}

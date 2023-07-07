@@ -6,9 +6,10 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 function Movies(props) {
+
   return (
     <>
-      <Header/>
+      <Header loggedIn={props.loggedIn} />
       <section className='movies'>
         <SearchForm />
         <MoviesCardList

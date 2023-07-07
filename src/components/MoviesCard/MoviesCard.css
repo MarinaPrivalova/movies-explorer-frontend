@@ -43,19 +43,22 @@
 .movies-card__btn {
   margin: 0;
   padding: 0;
-  background: url(../../images/save-film.svg) transparent no-repeat center;
   width: 16px;
   height: 16px;
   border: none;
   cursor: pointer;
 }
 
-.movies-card__btn_active {
+.movies-card__btn__blank {
+  background: url(../../images/save-film.svg) transparent no-repeat center;
+}
+
+.movies-card__btn_saved {
   background: url(../../images/save-film_act.svg) transparent no-repeat center;
 }
 
-.movies-card__btn_active:hover {
-  background: url(../../images/del.svg);
+.movies-card__btn_delete {
+  background: url(../../images/del.svg) transparent no-repeat center;
 }
 
 .movies-card__duration {

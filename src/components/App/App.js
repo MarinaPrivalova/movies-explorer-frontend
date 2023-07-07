@@ -11,13 +11,13 @@ import NotFound from '../NotFound/NotFound';
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
- /**код для отрисовки карточек (временный)*/ 
-  const CARDS_TOTAL = 16;
-  const CARDS_TOTAL_TWO = 3;
-  const cards = Array(CARDS_TOTAL).fill(null);
-  const saveCards = Array(CARDS_TOTAL_TWO).fill(null);
+ /**код для отрисовки карточек (без апи)*/ 
+  const cardsTotal = 16;
+  const cardsTotalSave = 3;
+  const cards = Array(cardsTotal).fill(null);
+  const saveCards = Array(cardsTotalSave).fill(null);
 
   return (
     <body className="app">

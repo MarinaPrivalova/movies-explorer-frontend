@@ -8,33 +8,11 @@
   background-color: #202020;
 }
 
-@media screen and (max-width: 769px) {
-  .authorization {
-    margin-top: 232px;
-    margin-bottom: 232px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .authorization {
-    margin-top: 56px;
-    margin-bottom: 30px;
-    width: 260px;
-  }
-}
-
 .authorization__link {
   width: 38px;
   height: 38px;
   text-decoration: none;
   margin-bottom: 40px;
-}
-
-@media screen and (max-width: 450px) {
-  .authorization__link {
-    margin-bottom: 50px;
-    align-self: center;
-  }
 }
 
 .authorization__logo {
@@ -50,13 +28,6 @@
   font-size: 24px;
   font-weight: 500;
   line-height: normal;
-}
-
-@media screen and (max-width: 450px) {
-  .authorization__title {
-    align-self: center;
-    margin-bottom: 80px;
-  }
 }
 
 .authorization-form {
@@ -121,7 +92,9 @@
 .authorization-form__error {
   margin: 0;
   padding: 0;
-  height: 30px;
+  margin-top: 10px;
+  display: block;
+  max-height: 30px;
   max-width: 396px;
   color: #ee3465;
   font-size: 10px;
@@ -145,16 +118,6 @@
   line-height: normal;
   padding: 14px 125px;
   cursor: pointer;
-}
-
-@media screen and (max-width: 450px) {
-  .authorization-form__button {
-    margin-top: 157px;
-    margin-bottom: 14px;
-    max-width: 260px;
-    padding: 15px 67px;
-    font-size: 12px;
-  }
 }
 
 .authorization-form__button:hover {
@@ -183,13 +146,6 @@
   line-height: normal;
 }
 
-@media screen and (max-width: 450px) {
-  .authorization-form__question {
-    font-size: 12px;
-    margin-right: 7px;
-  }
-}
-
 .authorization-form__question-link {
   margin: 0;
   padding: 0;
@@ -200,7 +156,38 @@
   line-height: normal;
 }
 
+@media screen and (max-width: 769px) {
+  .authorization {
+    margin-top: 232px;
+    margin-bottom: 232px;
+  }
+}
+
 @media screen and (max-width: 450px) {
+  .authorization {
+    margin-top: 56px;
+    margin-bottom: 30px;
+    width: 260px;
+  }
+  .authorization__link {
+    margin-bottom: 50px;
+    align-self: center;
+  }
+  .authorization__title {
+    align-self: center;
+    margin-bottom: 80px;
+  }
+  .authorization-form__button {
+    margin-top: 157px;
+    margin-bottom: 14px;
+    max-width: 260px;
+    padding: 15px 67px;
+    font-size: 12px;
+  }
+  .authorization-form__question {
+    font-size: 12px;
+    margin-right: 7px;
+  }
   .authorization-form__question-link {
     font-size: 12px;
   }

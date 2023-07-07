@@ -25,7 +25,7 @@ function Register() {
                   <input type='password' id='authorization-form__input-password' className='authorization-form__input' placeholder='Введите пароль' name='password' required minlength='8' maxlength='30' />
               </div>
           </fieldset>
-          <span className='authorization-form__error'></span>
+          <span className='authorization-form__error'>Что-то пошло не так...</span>
           <buttom className='authorization-form__button' type='submit'>Зарегистрироваться</buttom>
           <div className='authorization-form__question-container'>
               <p className='authorization-form__question'>Уже зарегистрированы?</p>
