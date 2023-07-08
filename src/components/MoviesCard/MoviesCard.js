@@ -7,15 +7,17 @@ function MoviesCard() {
   const location = useLocation();
 
   return (
-    <div className='movies-card'>
-      <img className='movies-card__img' src={Film} alt='Фотография из фильма' />
-        <div className='movies-card__content'>
-          <h2 className='movies-card__name'>33 слова о дизайне</h2>
-          {(location.pathname === '/movies') && <button className='movies-card__btn movies-card__btn__blank button'></button>}
-          {(location.pathname === '/saved-movies') && <button className='movies-card__btn movies-card__btn_delete '></button>}
+    <li className='card'>
+      <a href="https://www.youtube.com/watch?v=_zIK7IloRM4" className='card__link link' target="_blank" rel="noreferrer">
+        <img className='card__img' src={Film} alt='Фотография из фильма' />
+      </a>
+        <div className='card__content'>
+          <h2 className='card__name'>33 слова о дизайне</h2>
+          {(location.pathname === '/movies') && <button className='card__btn card__btn__blank button'></button>}
+          {(location.pathname === '/saved-movies') && <button className='card__btn card__btn_delete '></button>}
         </div>
-      <p className='movies-card__duration'>1ч 42м</p>
-    </div>
+      <p className='card__duration'>1ч 42м</p>
+    </li>
   );
 }
 

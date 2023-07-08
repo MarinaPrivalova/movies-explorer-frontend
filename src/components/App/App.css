@@ -20,22 +20,20 @@
 }
 
 .section-title {
-  max-width: 600px;
   font-size: 22px;
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.88px;
-}
-
-.section-border {
+  border-bottom: 1px solid #dadada;
+  padding-bottom: 23px;
   max-width: 1140px;
-  height: 1px;
-  background: #dadada;
+  width: 100%;
 }
 
 @media screen and (max-width: 565px) {
   .section-title {
     font-size: 18px;
     letter-spacing: -0.72px;
+    padding-bottom: 28px;
   }
 }

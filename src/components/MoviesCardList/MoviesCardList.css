@@ -1,4 +1,11 @@
-.movies__list {
+.moviescardlist {
+  margin: 0;
+  padding: 0;
+  max-width: 1280px;
+}
+
+.moviescardlist__list {
+  list-style: none;
   margin: 0 auto;
   padding: 70px 0 167px;
   display: grid;
@@ -13,7 +20,7 @@
 }
 
 @media screen and (max-width: 800px) {
-  .movies__list {
+  .moviescardlist__list {
     width: calc(100% - 2 * 30px);
     grid-template-columns: repeat(auto-fit, 339px);
     grid-template-rows: repeat(auto-fit, 257px);
@@ -23,7 +30,7 @@
 }
 
 @media screen and (max-width: 400px) {
-  .movies__list {
+  .moviescardlist__list {
     width: calc(100% - 2 * 10px);
     grid-template-columns: repeat(auto-fit, 300px);
     grid-template-rows: repeat(auto-fit, 235px);
