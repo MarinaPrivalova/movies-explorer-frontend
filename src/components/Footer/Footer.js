@@ -12,8 +12,8 @@ function Footer() {
       <div className="footer__navigation">
         <p className="footer__copyright">&copy; {currentYear}</p>
         <div className="footer__links">
-          <a href="https://practicum.yandex.ru" className="footer__link" target="_blank" rel="noreferrer">Яндекс.Практикум</a>
-          <a href="https://github.com/MarinaPrivalova" className="footer__link" target="_blank" rel="noreferrer">Github</a>
+          <a href="https://practicum.yandex.ru" className="footer__link link" target="_blank" rel="noreferrer">Яндекс.Практикум</a>
+          <a href="https://github.com/MarinaPrivalova" className="footer__link link" target="_blank" rel="noreferrer">Github</a>
         </div>
       </div>
     </footer>

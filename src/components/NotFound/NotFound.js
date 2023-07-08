@@ -7,11 +7,11 @@ function NotFound() {
   const goBack = () => navigate(-1);
 
   return (
-    <div className="notfound">
-      <h2 className="notfound__title">404</h2>
+    <section className="notfound">
+      <h1 className="notfound__title">404</h1>
       <p className="notfound__subtitle">Страница не найдена</p>
-      <button type="button" onClick={goBack} className="notfound__button">Назад</button>
-    </div>
+      <button type="button" onClick={goBack} className="notfound__button button">Назад</button>
+    </section>
   )
 }
 

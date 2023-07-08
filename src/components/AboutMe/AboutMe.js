@@ -14,8 +14,8 @@ function AboutMe() {
           <p className="aboutme__text">Я живу в Санкт-Петербурге и недавно закончила курс по веб-&nbsp;разработке.
             Мне нравится узнавать новое, искать и находить решения, что-то создавать.
             Каждый день стараюсь совершенствовать свои навыки, получать новые знания.
-            В свободное время люблю гулять и заниматься со своей собакой кинологическим фристайлом: изучаем новые трюки и танцуем.</p>
-          <a className="aboutme__link" href="https://github.com/MarinaPrivalova" target="_blank" rel="noreferrer">Github</a>
+            В свободное время люблю гулять и заниматься со своей собакой кинологическим фристайлом</p>
+          <a className="aboutme__link link" href="https://github.com/MarinaPrivalova" target="_blank" rel="noreferrer">Github</a>
         </div>
         <img className="aboutme__avatar" src={avatar} alt="Аватар" />
       </div>

@@ -7,7 +7,7 @@ function Profile({ loggedIn }) {
     <>
       <Header loggedIn={loggedIn} />
       <section className="profile">
-        <h2 className="profile__greetings">Привет, Виталий!</h2>
+        <h1 className="profile__greetings">Привет, Виталий!</h1>
         <fieldset className="profile__user">
           <label className="profile__data">
             <p className="profile__data-field">Имя</p>
@@ -31,8 +31,8 @@ function Profile({ loggedIn }) {
           </label>
         </fieldset>
         <div className="profile__btns">
-          <button className="profile__btn profile__btn_edit">Редактировать</button>
-          <button className="profile__btn profile__btn_checkout">Выйти из аккаунта</button>
+          <button className="profile__btn profile__btn_edit button">Редактировать</button>
+          <button className="profile__btn profile__btn_checkout button">Выйти из аккаунта</button>
         </div>
       </section>
     </>

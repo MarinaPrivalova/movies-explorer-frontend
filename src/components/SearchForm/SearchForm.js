@@ -3,16 +3,16 @@ import './SearchForm.css';
 
 function SearchForm() {
   return (
-    <form className='movies__form'>
-      <div className='movies__input-container'>
-        <input className='movies__input' placeholder='Фильм' required></input>
-        <button className='movies__btn'>Найти</button>
+    <section className='seachform'>
+      <div className='seachform__input-container'>
+        <input className='seachform__input' placeholder='Фильм' required></input>
+        <button className='seachform__btn button'>Найти</button>
       </div>
-      <div className='movies__checkbox-conteiner'>
-        <input type='checkbox' className='movies__checkbox' id='movies__checkbox' value='yes'></input>
-        <label className='movies__label' for='movies__checkbox'>Короткометражки</label>
+      <div className='seachform__checkbox-conteiner'>
+        <input type='checkbox' className='seachform__checkbox' id='seachform__checkbox' value='yes'></input>
+        <label className='seachform__label link' htmlFor='seachform__checkbox'>Короткометражки</label>
       </div>
-    </form>
+    </section>
   );
 }
 

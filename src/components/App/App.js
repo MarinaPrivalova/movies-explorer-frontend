@@ -20,7 +20,7 @@ function App() {
   const saveCards = Array(cardsTotalSave).fill(null);
 
   return (
-    <body className="app">
+    <div className="app">
       <Routes>
         <Route path="/" element={<Main loggedIn={loggedIn} />} />
         <Route path="/movies" 
@@ -44,7 +44,7 @@ function App() {
         <Route path="/signup" element={<Register />} />
         <Route path="*"element={<NotFound />}/>
       </Routes>
-    </body>
+    </div>
   );
 }
 

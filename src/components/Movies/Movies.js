@@ -10,13 +10,13 @@ function Movies(props) {
   return (
     <>
       <Header loggedIn={props.loggedIn} />
-      <section className='movies'>
+      <main className='movies'>
         <SearchForm />
         <MoviesCardList
           cards={props.cards}
         />
-        <button className='movies__add-cards'>Ещё</button>
-      </section>
+        <button className='movies__add-cards button'>Ещё</button>
+      </main>
       <Footer />
     </>
   );
