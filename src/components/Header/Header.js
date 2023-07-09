@@ -9,7 +9,7 @@ function Header({ loggedIn }) {
 
   return (
     <header className={headerClass}>
-      <Link to="/" className="header__logo-link link">{<img className="header__logo" src={logo} alt="Логотип" /> }</Link>
+      <Link to="/" className="header__link header__link_logo link">{<img className="header__logo" src={logo} alt="Логотип" /> }</Link>
       <Navigation loggedIn={loggedIn}/>
     </header>
   );

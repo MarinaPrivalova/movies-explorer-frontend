@@ -5,7 +5,6 @@ function AboutProject() {
   return (
     <section className="aboutproject" id="aboutproject">
       <h2 className="aboutproject__title section-title">О проекте</h2>
-      <div className="aboutproject__border section-border"></div>
       <div className="aboutproject__container">
         <div className="aboutproject__discription">
           <h3 className="aboutproject__subtitle">Дипломный проект включал 5 этапов</h3>
@@ -26,8 +25,6 @@ function AboutProject() {
           <p className="aboutproject__timecode-text">Front-end</p>
         </div>
       </div>
-      
-
     </section>
   );
 }

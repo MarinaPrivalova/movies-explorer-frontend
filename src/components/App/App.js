@@ -15,7 +15,7 @@ function App() {
 
  /**код для отрисовки карточек (без апи)*/ 
   const cardsTotal = 16;
-  const cardsTotalSave = 3;
+  const cardsTotalSave = 4;
   const cards = Array(cardsTotal).fill(null);
   const saveCards = Array(cardsTotalSave).fill(null);
 

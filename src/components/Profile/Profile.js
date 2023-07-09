@@ -23,8 +23,8 @@ function Profile({ loggedIn }) {
         <h1 className='profile__greetings'>Привет, Виталий!</h1>
         <form className='profile__form'>
           <fieldset className='profile__user'>
-            <label className='profile__data'>
-              <p className='profile__data-field'>Имя</p>
+            <div className='profile__data'>
+              <label className='profile__data-field'>Имя</label>
               <input
                 id='profile__name'
                 className='profile__input'
@@ -37,9 +37,9 @@ function Profile({ loggedIn }) {
                 defaultValue='Виталий'
                 disabled={initChange ? false : true}
               />
-            </label>
-            <label className='profile__data'>
-              <p className='profile__data-field'>E-mail</p>
+            </div>
+            <div className='profile__data'>
+              <label className='profile__data-field'>E-mail</label>
               <input
                 id='profile__email'
                 className='profile__input'
@@ -50,7 +50,7 @@ function Profile({ loggedIn }) {
                 required
                 disabled={initChange ? false : true}
               />
-            </label>
+            </div>
           </fieldset>
           <div className='profile__btns'>
             {initChange ?

@@ -19,7 +19,7 @@
   margin: 0;
   padding: 0;
   width: 270px;
-  height: 151px;
+  height: 147px;
   object-fit: cover;
   object-position: center;
 }
@@ -88,6 +88,6 @@
 @media screen and (max-width: 400px) {
   .card__img {
     width: 300px;
-    height: 168px;
+    height: 164px;
   }
 }
