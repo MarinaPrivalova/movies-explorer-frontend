@@ -1,11 +1,8 @@
 .profile {
-  margin: 0;
-  padding: 0;
+  color: #fff;
+  margin: 0 auto;
   max-width: 1280px;
   width: 100%;
-  margin: 0 auto;
-  background-color: #202020;
-  color: #fff;
 }
 
 .profile__greetings {
@@ -16,6 +13,13 @@
   font-size: 24px;
   font-weight: 500;
   line-height: normal;
+}
+
+.profile__form {
+  margin: 0;
+  padding: 0;
+  max-width: 1280px;
+  background-color: #202020;
 }
 
 .profile__user {
@@ -94,7 +98,17 @@
 .profile__btn_edit {
 }
 
-.profile__btn_checkout {
+.profile__btn_submit {
+  border: none;
+  border-radius: 3px;
+  background: #4285f4;
+  text-align: center;
+  font-weight: 500;
+  width: 410px;
+  padding: 13px 0;
+}
+
+.profile__btn_exit {
   color: #ee3465;
   padding-top: 16px;
 }
@@ -123,5 +137,9 @@
   }
   .profile__btns {
     padding-bottom: 40px;
+  }
+  .profile__btn_submit {
+    width: 260px;
+    font-size: 12px;
   }
 }

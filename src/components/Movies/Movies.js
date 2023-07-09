@@ -15,7 +15,7 @@ function Movies(props) {
         <MoviesCardList
           cards={props.cards}
         />
-        <button className='movies__add-cards button'>Ещё</button>
+        <button className='movies__add-cards button' type='button'>Ещё</button>
       </main>
       <Footer />
     </>

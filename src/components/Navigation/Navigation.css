@@ -22,6 +22,7 @@
   margin-left: 50px;
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 
 .navigation__title {
@@ -33,7 +34,7 @@
   margin-right: 20px;
 }
 
-.navigation__title:last-of-type {
+.navigation__title:nth-child(2) {
   margin-right: 0;
 }
 
@@ -73,13 +74,22 @@
   text-decoration: none;
 }
 
-.navigation__button_logged {
-  background: url(../../images/icon_account.svg) #313131 no-repeat center;
-  width: 30px;
-  height: 30px;
+.navigation__account-icon {
+  width: 10.7px;
+  height: 10.7px;
   border-radius: 6px;
-  display: block;
+  background-color: #313131;
+  padding: 9.7px;
+  object-position: center;
+}
+
+.navigation__button_type_reg {
   padding: 0;
+  background-color: transparent;
+  color: #FFF;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
 }
 
 .navigation__burger {
@@ -167,17 +177,19 @@
   .navigation__title-sidebar:last-of-type {
     padding-bottom: 621px;
   }
-  .navigation__title-sidebar_active {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    color: #fff;
-  }
   .navigation__link-sidebar {
     text-decoration: none;
     color: #fff;
     padding: 0;
     margin: 0;
     cursor: pointer;
+  }
+  .navigation__link-sidebar_active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    color: #fff;
+    text-underline-offset: 7px;
+    text-decoration-skip-ink: auto;
   }
   .navigation__account-sidebar {
     display: flex;

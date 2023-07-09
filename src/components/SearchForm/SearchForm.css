@@ -31,6 +31,7 @@
 
 .seachform__input:focus {
   outline: none;
+  opacity: .4;
 }
 
 .seachform__btn {

@@ -13,8 +13,8 @@ function MoviesCard() {
       </a>
         <div className='card__content'>
           <h2 className='card__name'>33 слова о дизайне</h2>
-          {(location.pathname === '/movies') && <button className='card__btn card__btn__blank button'></button>}
-          {(location.pathname === '/saved-movies') && <button className='card__btn card__btn_delete '></button>}
+          {(location.pathname === '/movies') && <button className='card__btn card__btn__blank button' type='button'></button>}
+          {(location.pathname === '/saved-movies') && <button className='card__btn card__btn_delete ' type='button'></button>}
         </div>
       <p className='card__duration'>1ч 42м</p>
     </li>
