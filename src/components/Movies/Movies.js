@@ -4,6 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import Preloader from '../Preloader/Preloader'
 
 function Movies(props) {
 
@@ -12,9 +13,10 @@ function Movies(props) {
       <Header loggedIn={props.loggedIn} />
       <main className='movies'>
         <SearchForm />
-        {/* <MoviesCardList
+        <Preloader />
+        <MoviesCardList
           cards={props.cards}
-        /> */}
+        />
         <button className='movies__add-cards button' type='button'>Ещё</button>
       </main>
       <Footer />

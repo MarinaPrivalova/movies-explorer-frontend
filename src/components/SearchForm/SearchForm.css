@@ -13,7 +13,6 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #424242;
-  margin-bottom: 33px;
 }
 
 .seachform__input {
@@ -31,7 +30,21 @@
 
 .seachform__input:focus {
   outline: none;
-  opacity: .4;
+  opacity: 0.4;
+}
+
+.searchform__error {
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+  display: block;
+  max-height: 30px;
+  max-width: 396px;
+  color: #ee3465;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+  align-self: flex-start;
 }
 
 .seachform__btn {
@@ -50,10 +63,23 @@
   cursor: pointer;
 }
 
+.searchform__btn_disabled {
+  cursor: default;
+  background-color: #8b8b8b;
+  color: #303030;
+}
+
+.searchform__btn_disabled:hover {
+  transition: none;
+  opacity: 1;
+  cursor: default;
+}
+
 .seachform__checkbox-conteiner {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 33px;
 }
 
 .seachform__checkbox {

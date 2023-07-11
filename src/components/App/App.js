@@ -1,43 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import {
-  CurrentUserContext,
-  defaultCurrentUser,
-} from '../../contexts/CurrentUserContext';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import './App.css';
-import Main from '../Main/Main';
-import Movies from '../Movies/Movies';
-import SavedMovies from '../SavedMovies/SavedMovies';
-import Register from '../Register/Register';
-import Login from '../Login/Login';
-import Profile from '../Profile/Profile';
-import NotFound from '../NotFound/NotFound';
-import mainApi from '../../utils/MainApi';
-import * as apiAuth from '../../utils/apiAuth';
+import React, { useState, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import "./App.css";
+import Main from "../Main/Main";
+import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
+import NotFound from "../NotFound/NotFound";
+import mainApi from "../../utils/MainApi";
+import * as apiAuth from "../../utils/apiAuth";
+import moviesApi from "../../utils/MoviesApi";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(defaultCurrentUser);
+  const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const [cards, setCards] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedIn) {
-      Promise.all([mainApi.getUserInfo()])
-        .then(([userData]) => {
-          setCurrentUser(userData);
-        })
+    const jwt = localStorage.getItem("jwt")
+    if (jwt) {
+      Promise.all([mainApi.getUserInfo()]).then(([userData]) => {
+        setCurrentUser(userData);
+        setLoggedIn(true);
+      })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     }
   }, [loggedIn]);
 
   /**Получить токен*/
   function checkToken() {
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem("jwt");
     if (token) {
       apiAuth
         .checkToken(token)
@@ -45,7 +46,7 @@ function App() {
           mainApi.setToken(token);
           setLoggedIn(true);
           setCurrentUser(currentUser);
-          navigate('/movies');
+          navigate("/movies");
         })
         .catch((err) => {
           console.log(err);
@@ -61,7 +62,7 @@ function App() {
     apiAuth
       .register(regData)
       .then((res) => {
-        navigate('/signin');
+        navigate("/signin");
         console.log(res);
       })
       .catch((err) => {
@@ -71,28 +72,42 @@ function App() {
 
   /**Авторизация пользователя */
   function handleLogin(loginData) {
-    apiAuth.login(loginData)
+    apiAuth
+      .login(loginData)
       .then((res) => {
         if (res && res.token) {
-          setCurrentUser(currentUser)
-          localStorage.setItem('jwt', res.token);
+          setCurrentUser(currentUser);
+          localStorage.setItem("jwt", res.token);
           mainApi.setToken(res.token);
           setLoggedIn(true);
-          navigate('/movies');
+          navigate("/movies");
         }
       })
       .catch((err) => {
         console.log(err);
-      })
-  };
+      });
+  }
+
+  /**Изменить данные пользователя*/
+  function handleUpdateUser(userData) {
+    mainApi.updateUserInfo(userData)
+    .then((newUser) => {
+      setCurrentUser(newUser);
+      setErrorMessage("")
+      console.log("Данные успешно обновлены")
+    }).catch((err) => {
+      console.error(err);
+      setErrorMessage(err.message)
+    });
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className='app'>
+      <div className="app">
         <Routes>
-          <Route path='/' element={<Main loggedIn={loggedIn} />} />
+          <Route path="/" element={<Main loggedIn={loggedIn} />} />
           <Route
-            path='/movies'
+            path="/movies"
             element={
               <ProtectedRoute
                 element={Movies}
@@ -102,25 +117,27 @@ function App() {
             }
           />
           <Route
-            path='/saved-movies'
+            path="/saved-movies"
             element={
-              <ProtectedRoute
-                element={SavedMovies}
-                loggedIn={loggedIn}
-                cards={cards}
-              />
+              <ProtectedRoute element={SavedMovies} loggedIn={loggedIn} />
             }
           />
           <Route
-            path='/profile'
-            element={<ProtectedRoute element={Profile} loggedIn={loggedIn} />}
+            path="/profile"
+            element={
+              <ProtectedRoute
+                element={Profile}
+                loggedIn={loggedIn}
+                onUpdateUser={handleUpdateUser}
+              />
+            }
           />
-          <Route path='/signin' element={<Login onLogin={handleLogin} />} />
+          <Route path="/signin" element={<Login onLogin={handleLogin} />} />
           <Route
-            path='/signup'
+            path="/signup"
             element={<Register onRegister={handleRegister} />}
           />
-          <Route path='*' element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </CurrentUserContext.Provider>

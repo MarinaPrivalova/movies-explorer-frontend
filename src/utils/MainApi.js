@@ -35,7 +35,7 @@ class MainApi {
   }
 
   /**Удалить карточку*/
-  deleteCard(id) {
+  deleteMovie(id) {
     return fetch(`${this._url}/movies/${id}`,
       {
         method: 'DELETE',
@@ -45,21 +45,13 @@ class MainApi {
   }
 
   /**Сохранить карточку*/
-  savedCard(card) {
+  savedMovie(card) {
     return fetch(`${this._url}/movies`,
       {
         method: 'POST',
         headers: this._headers,
         body: JSON.stringify(card)
       })
-      .then(this._handleResponce)
-  }
-
-  /**Получить все карточки*/
-  getAllCards() {
-    return fetch(`${this._url}/movies`, {
-      headers: this._headers
-    })
       .then(this._handleResponce)
   }
 }

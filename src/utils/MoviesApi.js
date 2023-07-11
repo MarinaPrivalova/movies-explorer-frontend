@@ -13,7 +13,7 @@ class MoviesApi {
   }
 
   /**Загрузить фильмы с сервера*/
-  getAllCards() {
+  getAllMovies() {
     return fetch(`${this._url}`,{ 
       headers: this._headers 
     })
