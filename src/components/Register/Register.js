@@ -1,19 +1,118 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 import './Register.css';
-import { useFormValidation } from '../FormValidation/FormValidation';
 
-function Register(props) {
-  const { values, handleChange, errors, isValid } = useFormValidation();
+function Register({ onRegister, statusRequest }) {
+  /**Переменные состояния полей почты и пароля*/
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  /**Переменные состояния ошибок при заполнении полей*/
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordlError] = useState('');
+  /**Переменные валидности полей при заполнении*/
+  const [nameValid, setNameValid] = useState(false);
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+  /**Переменная состояния статуса изменений*/
+  const [messageStatus, setMessageStatus] = useState('');
+  /**Переменная состония валидности формы*/
+  const [formValid, setFormValid] = useState(false);
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    if (isValid) {
-      props.onRegister(values);
-      props.setErrorServerMessage('');
+  /**Обработка запроса с сервера*/
+  function handleStatusRequest() {
+    if (statusRequest === 409) {
+      setMessageStatus('Пользователь с такой почтой уже существует');
+    } else if (statusRequest === 500) {
+      setMessageStatus(
+        'Произошла ошибка сервера. Попробуйте ввести изменения позднее'
+      );
+    } else if (statusRequest === 400) {
+      setMessageStatus('Некорректно введены данные');
+    } else {
+      setMessageStatus('');
     }
   }
+
+  /**Отслеживание состояния ответов с сервера*/
+  useEffect(() => {
+    handleStatusRequest();
+  }, [statusRequest]);
+
+  /**Функция изменения имени пользователя и проверка формы*/
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+    setMessageStatus('');
+    const nameRegex = /^[а-яА-ЯёЁa-zA-Z -]+$/g;
+
+    if (e.target.value.length === 0) {
+      setNameError('Поле не может быть пустым');
+      setNameValid(false);
+    } else if (e.target.value.length < 2 || e.target.value.length > 30) {
+      setNameError('Имя пользователя должно быть длинее 2 и меньше 30');
+      setNameValid(false);
+    } else if (!nameRegex.test(String(e.target.value).toLocaleLowerCase())) {
+      setNameError('Некорректное имя');
+      setNameValid(false);
+    } else {
+      setNameError('');
+      setNameValid(true);
+    }
+  };
+
+  /**Функция изменения почты пользователя и проверка формы*/
+  function handleChangeEmail(e) {
+    setEmail(e.target.value);
+    setMessageStatus('');
+    const emailRegex = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
+    if (e.target.value.length === 0) {
+      setEmailError('Поле не может быть пустым');
+      setEmailValid(false);
+    } else if (!emailRegex.test(String(e.target.value).toLocaleLowerCase())) {
+      setEmailError('Некорректный email');
+      setEmailValid(false);
+    } else {
+      setEmailError('');
+      setEmailValid(true);
+    }
+  }
+
+  /**Функция изменения пароля пользователя и проверка формы*/
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
+    setMessageStatus('');
+
+    if (!e.target.value) {
+      setPasswordlError('Поле не может быть пустым');
+      setPasswordValid(false);
+    } else {
+      setPasswordlError('');
+      setPasswordValid(true);
+    }
+  }
+
+  /**Функция проверки валидности полей*/
+  function inputValid() {
+    if (!nameValid || !emailValid || !passwordValid) {
+      setFormValid(false);
+      return;
+    }
+    setFormValid(true);
+  }
+
+  /**Функция сохранения формы*/
+  function handleSubmit(e) {
+    e.preventDefault();
+    onRegister({ name, email, password });
+  }
+
+  /**Отслеживание состояния полей инпутов*/
+  useEffect(() => {
+    inputValid();
+  }, [name, email, password]);
 
   return (
     <section className='authorization'>
@@ -44,12 +143,10 @@ function Register(props) {
               required
               minLength='2'
               maxLength='30'
-              value={values.name || ''}
-              onChange={handleChange}
+              value={name}
+              onChange={handleChangeName}
             />
-            {errors.name && (
-              <span className='authorization-form__error'>{errors.name}</span>
-            )}
+            <span className='authorization-form__error'>{nameError}</span>
           </div>
           <div className='authorization-form__input-container'>
             <label
@@ -67,12 +164,10 @@ function Register(props) {
               required
               minLength='5'
               maxLength='30'
-              value={values.email || ''}
-              onChange={handleChange}
+              value={email}
+              onChange={handleChangeEmail}
             />
-            {errors.email && (
-              <span className='authorization-form__error'>{errors.email}</span>
-            )}
+            <span className='authorization-form__error'>{emailError}</span>
           </div>
           <div className='authorization-form__input-container'>
             <label
@@ -90,23 +185,21 @@ function Register(props) {
               required
               minLength='8'
               maxLength='30'
-              value={values.password || ''}
-              onChange={handleChange}
+              value={password}
+              onChange={handleChangePassword}
             />
-            {errors.password && (
-              <span className='authorization-form__error'>
-                {errors.password}
-              </span>
-            )}
+            <span className='authorization-form__error'>{passwordError}</span>
           </div>
         </fieldset>
         <span className='authorization-form__error authorization-form__error_server'>
-          {props.errorServerMessage}
+          {messageStatus}
         </span>
-        <button 
-            className={`authorization-form__btn button ${!isValid ? 'authorization-form__btn_disabled' : ''}`}
-            type='submit'
-            disabled={!isValid}
+        <button
+          className={`authorization-form__btn button ${
+            !formValid ? 'authorization-form__btn_disabled' : ''
+          }`}
+          type='submit'
+          disabled={!formValid}
         >
           Зарегистрироваться
         </button>

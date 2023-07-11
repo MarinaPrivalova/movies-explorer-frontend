@@ -12,9 +12,9 @@ function Movies(props) {
       <Header loggedIn={props.loggedIn} />
       <main className='movies'>
         <SearchForm />
-        <MoviesCardList
+        {/* <MoviesCardList
           cards={props.cards}
-        />
+        /> */}
         <button className='movies__add-cards button' type='button'>Ещё</button>
       </main>
       <Footer />
