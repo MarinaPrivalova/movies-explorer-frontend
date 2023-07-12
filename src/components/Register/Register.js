@@ -84,7 +84,7 @@ function Register({ onRegister, statusRequest }) {
   function handleChangePassword(e) {
     setPassword(e.target.value);
     setMessageStatus('');
-
+    
     if (!e.target.value) {
       setPasswordlError('Поле не может быть пустым');
       setPasswordValid(false);
@@ -98,6 +98,7 @@ function Register({ onRegister, statusRequest }) {
   function inputValid() {
     if (!nameValid || !emailValid || !passwordValid) {
       setFormValid(false);
+      setMessageStatus('');
       return;
     }
     setFormValid(true);

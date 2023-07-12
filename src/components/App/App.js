@@ -17,88 +17,96 @@ import moviesApi from "../../utils/MoviesApi";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [statusRequest, setStatusRequest] = useState(null);
 
   const [cards, setCards] = useState([]);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt")
-    if (jwt) {
-      Promise.all([mainApi.getUserInfo()]).then(([userData]) => {
-        setCurrentUser(userData);
-        setLoggedIn(true);
-      })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, [loggedIn]);
-
   /**Получить токен*/
   function checkToken() {
     const token = localStorage.getItem("jwt");
+    mainApi.setToken(token);
     if (token) {
-      apiAuth
-        .checkToken(token)
-        .then((res) => {
-          mainApi.setToken(token);
+      mainApi
+        .getUserInfo()
+        .then((user) => {
+          setCurrentUser(user);
           setLoggedIn(true);
-          setCurrentUser(currentUser);
-          navigate("/movies");
         })
         .catch((err) => {
-          console.log(err);
+          console.log("Ошибка токена в АПИ", err);
+          setLoggedIn(false);
+          logOut();
         });
+    } else {
+      setLoggedIn(false);
     }
   }
+
   useEffect(() => {
     checkToken();
-  }, []);
+  }, [loggedIn]);
 
   /**Зарегистрировать пользователя*/
   function handleRegister(regData) {
+    const email = regData.email;
+    const password = regData.password;
     apiAuth
       .register(regData)
       .then((res) => {
-        navigate("/signin");
-        console.log(res);
+        handleLogin({ email, password });
+        navigate("/movies");
+        setStatusRequest(200)
       })
       .catch((err) => {
-        console.log(err);
+        setLoggedIn(false);
+        setStatusRequest(err)
+        console.log("Ошибка при регистрации", err);
       });
   }
 
-  /**Авторизация пользователя */
+  /**Авторизация пользователя*/
   function handleLogin(loginData) {
     apiAuth
       .login(loginData)
       .then((res) => {
-        if (res && res.token) {
-          setCurrentUser(currentUser);
-          localStorage.setItem("jwt", res.token);
-          mainApi.setToken(res.token);
-          setLoggedIn(true);
-          navigate("/movies");
-        }
+        localStorage.setItem("jwt", res.token);
+        navigate("/movies");
+        setLoggedIn(true);
+        setStatusRequest(200)
       })
       .catch((err) => {
-        console.log(err);
+        setLoggedIn(false);
+        setStatusRequest(err)
+        console.log("Ошибка логирования", err);
       });
+  }
+
+  /**Выйти из аккаунта*/
+  function logOut() {
+    localStorage.clear();
+    setLoggedIn(false);
+    setCurrentUser({});
+    navigate("/");
+    mainApi.setToken("");
+    console.log("Выход");
   }
 
   /**Изменить данные пользователя*/
   function handleUpdateUser(userData) {
-    mainApi.updateUserInfo(userData)
-    .then((newUser) => {
-      setCurrentUser(newUser);
-      setErrorMessage("")
-      console.log("Данные успешно обновлены")
-    }).catch((err) => {
-      console.error(err);
-      setErrorMessage(err.message)
-    });
+    mainApi
+      .updateUserInfo(userData)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        setErrorMessage("");
+        console.log("Данные успешно обновлены");
+      })
+      .catch((err) => {
+        console.error(err);
+        setErrorMessage(err.message);
+      });
   }
 
   return (
@@ -129,6 +137,7 @@ function App() {
                 element={Profile}
                 loggedIn={loggedIn}
                 onUpdateUser={handleUpdateUser}
+                logOut={logOut}
               />
             }
           />

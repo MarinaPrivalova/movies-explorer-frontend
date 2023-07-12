@@ -4,14 +4,29 @@ import Header from '../Header/Header';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile(props) {
-  const { loggedIn, onUpdateUser } = props;
+  const { loggedIn, onUpdateUser, logOut } = props;
 
   const currentUser = useContext(CurrentUserContext);
 
   const [initChange, setInitChange] = useState(false);
+
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
 
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  /**Переменная состояния валидности формы*/
+  const [formValid, setFormValid] = useState(false);
+  /**Переменная состояния кнопки*/
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  /**Переменная состояния успешного результата*/
+  const [updateForm, setUpdateForm] = useState();
+
+  /**После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.*/
+  useEffect(() => {
+    setButtonDisabled(currentUser.name === name && currentUser.email === email);
+  }, [name, email, currentUser.name, currentUser.email]);
 
   useEffect(() => {
     setName(currentUser.name);
@@ -24,15 +39,40 @@ function Profile(props) {
   }
 
   function handleChangeName(e) {
+    setInitChange(true);
     setName(e.target.value);
+    if (
+      e.target.value === currentUser.name ||
+      e.target.value === currentUser.email
+    ) {
+      setFormValid(false);
+      setNameError('Имя должно отличаться от установленного');
+    } else {
+      setNameError(e.target.validationMessage);
+      setFormValid(e.target.closest('form').checkValidity());
+      setUpdateForm('');
+    }
   }
+
   function handleChangeEmail(e) {
+    setInitChange(true);
     setEmail(e.target.value);
+    if (
+      e.target.value === currentUser.email ||
+      e.target.value === currentUser.email
+    ) {
+      setFormValid(false);
+      setEmailError('Email должен отличаться от установленного');
+    } else {
+      setEmailError(e.target.validationMessage);
+      setFormValid(e.target.closest('form').checkValidity());
+      setUpdateForm('');
+    }
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    onUpdateUser({ name, email });
+    onUpdateUser({ name, email }, setUpdateForm);
     setInitChange(false);
   }
 
@@ -59,12 +99,13 @@ function Profile(props) {
                 onChange={handleChangeName}
               />
             </div>
+            <span className='profile__error'>{nameError}</span>
             <div className='profile__data'>
               <label className='profile__data-field'>E-mail</label>
               <input
                 id='profile__email'
                 className='profile__input'
-                type='text'
+                type='email'
                 name='email'
                 placeholder='Ваш email'
                 required
@@ -73,13 +114,22 @@ function Profile(props) {
                 onChange={handleChangeEmail}
               />
             </div>
+            <span className='profile__error'>{emailError}</span>
           </fieldset>
+          {updateForm && (
+            <span className='profile__error profile__error_success'>
+              {updateForm}
+            </span>
+          )}
           <div className='profile__btns'>
             {initChange ? (
               <button
-                className='profile__btn profile__btn_submit button'
+                className={`profile__btn profile__btn_submit button ${
+                  formValid ? '' : 'profile__btn_submit_disabled'
+                }`}
                 type='submit'
                 onClick={handleSubmit}
+                disabled={!formValid || buttonDisabled}
               >
                 Сохранить
               </button>
@@ -95,6 +145,7 @@ function Profile(props) {
                 <button
                   className='profile__btn profile__btn_exit button'
                   type='button'
+                  onClick={logOut}
                 >
                   Выйти из аккаунта
                 </button>
