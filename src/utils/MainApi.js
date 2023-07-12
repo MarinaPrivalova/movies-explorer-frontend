@@ -34,6 +34,14 @@ class MainApi {
       .then(this._handleReply)
   }
 
+  /**Получить все карточки*/
+  getAllCards() {
+    return fetch(`${this._url}/movies`, {
+      headers: this._headers
+    })
+      .then(this._handleResponce)
+  }
+
   /**Удалить карточку*/
   deleteMovie(id) {
     return fetch(`${this._url}/movies/${id}`,

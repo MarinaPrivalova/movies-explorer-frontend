@@ -12,7 +12,6 @@ import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import mainApi from '../../utils/MainApi';
 import * as apiAuth from '../../utils/apiAuth';
-import moviesApi from '../../utils/MoviesApi';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -39,10 +38,14 @@ function App() {
           setLoggedIn(false);
           logOut();
           if (err === 'Ошибка: 401') {
-            setLoginError('При авторизации произошла ошибка. Токен не передан или передан не в том формате.');
-          } 
+            setLoginError(
+              'При авторизации произошла ошибка. Токен не передан или передан не в том формате.'
+            );
+          }
           if (err === 'Ошибка: 403') {
-            setLoginError('При авторизации произошла ошибка. Переданный токен некорректен.');
+            setLoginError(
+              'При авторизации произошла ошибка. Переданный токен некорректен.'
+            );
           }
         });
     } else {
@@ -129,12 +132,7 @@ function App() {
           <Route path='/' element={<Main loggedIn={loggedIn} />} />
           <Route
             path='/movies'
-            element={
-              <ProtectedRoute
-                element={Movies}
-                loggedIn={loggedIn}
-              />
-            }
+            element={<ProtectedRoute element={Movies} loggedIn={loggedIn} />}
           />
           <Route
             path='/saved-movies'

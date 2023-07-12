@@ -17,6 +17,12 @@
   max-width: 1280px;
   align-items: center;
   justify-content: center;
+  justify-items: center;
+}
+
+.moviescardlist__text {
+  color: #EE3465;
+  text-align: center;
 }
 
 @media screen and (max-width: 800px) {
