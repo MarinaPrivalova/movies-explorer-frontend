@@ -3,13 +3,13 @@ import Logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 import './Login.css';
 
-function Login({ onLogin, statusRequest }) {
+function Login({ onLogin, loginError }) {
   /**Переменные состояния полей почты и пароля*/
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   /**Переменные состояния ошибок при заполнении полей*/
   const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordlError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   /**Переменные валидности полей при заполнении*/
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
@@ -17,28 +17,6 @@ function Login({ onLogin, statusRequest }) {
   const [messageStatus, setMessageStatus] = useState('');
   /**Переменная состония валидности формы*/
   const [formValid, setFormValid] = useState(false);
-
-  /**Обработка запроса с сервера*/
-  function handleStatusRequest() {
-    if (statusRequest === 401) {
-      setMessageStatus(
-        'Такого пользователя не существует. Придется регистрироваться'
-      );
-    } else if (statusRequest === 500) {
-      setMessageStatus(
-        'Произошла ошибка сервера. Попробуйте ввести изменения позднее'
-      );
-    } else if (statusRequest === 400) {
-      setMessageStatus('Некорректно введены данные');
-    } else {
-      setMessageStatus('');
-    }
-  }
-
-  /**Отслеживание состония ответов с сервера*/
-  useEffect(() => {
-    handleStatusRequest();
-  }, [statusRequest]);
 
   /**Функция изменения имени пользователя и проверка формы*/
   function handleChangeEmail(e) {
@@ -64,10 +42,15 @@ function Login({ onLogin, statusRequest }) {
     setMessageStatus('');
 
     if (!e.target.value) {
-      setPasswordlError('Поле не может быть пустым');
+      setPasswordError('Поле не может быть пустым');
+      setPasswordValid(false);
+    } else if (e.target.value.length <= 7) {
+      setPasswordError(
+        'Длина пароля не может быть меньше 8 и больше 30 символов'
+      );
       setPasswordValid(false);
     } else {
-      setPasswordlError('');
+      setPasswordError('');
       setPasswordValid(true);
     }
   }
@@ -149,7 +132,7 @@ function Login({ onLogin, statusRequest }) {
           </div>
         </fieldset>
         <span className='login-form__error login-form__error_server'>
-          {messageStatus}
+          {loginError}
         </span>
         <button
           className={`login-form__button button ${

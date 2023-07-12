@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile(props) {
-  const { loggedIn, onUpdateUser, logOut } = props;
+  const { loggedIn, onUpdateUser, logOut, profileMessage } = props;
 
   const currentUser = useContext(CurrentUserContext);
 
@@ -115,12 +115,10 @@ function Profile(props) {
               />
             </div>
             <span className='profile__error'>{emailError}</span>
-          </fieldset>
-          {updateForm && (
-            <span className='profile__error profile__error_success'>
-              {updateForm}
+            <span className='profile__error'>
+              {profileMessage}
             </span>
-          )}
+          </fieldset>
           <div className='profile__btns'>
             {initChange ? (
               <button

@@ -6,9 +6,7 @@ function MoviesCardList(props) {
   return (
     <section className="moviescardlist">
       <ul className="moviescardlist__list">
-        {props.cards.map((card, index) => (
-          <MoviesCard key={index} />
-        ))}
+        <MoviesCard />
       </ul>
     </section>
   );

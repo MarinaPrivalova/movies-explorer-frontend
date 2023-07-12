@@ -6,17 +6,15 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader'
 
-function Movies(props) {
+function Movies({ loggedIn }) {
 
   return (
     <>
-      <Header loggedIn={props.loggedIn} />
+      <Header loggedIn={loggedIn} />
       <main className='movies'>
         <SearchForm />
         <Preloader />
-        <MoviesCardList
-          cards={props.cards}
-        />
+        <MoviesCardList />
         <button className='movies__add-cards button' type='button'>Ещё</button>
       </main>
       <Footer />

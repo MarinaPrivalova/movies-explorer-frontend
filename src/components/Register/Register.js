@@ -3,7 +3,7 @@ import Logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 import './Register.css';
 
-function Register({ onRegister, statusRequest }) {
+function Register({ onRegister, registerError }) {
   /**Переменные состояния полей почты и пароля*/
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -11,7 +11,7 @@ function Register({ onRegister, statusRequest }) {
   /**Переменные состояния ошибок при заполнении полей*/
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordlError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   /**Переменные валидности полей при заполнении*/
   const [nameValid, setNameValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
@@ -20,26 +20,6 @@ function Register({ onRegister, statusRequest }) {
   const [messageStatus, setMessageStatus] = useState('');
   /**Переменная состония валидности формы*/
   const [formValid, setFormValid] = useState(false);
-
-  /**Обработка запроса с сервера*/
-  function handleStatusRequest() {
-    if (statusRequest === 409) {
-      setMessageStatus('Пользователь с такой почтой уже существует');
-    } else if (statusRequest === 500) {
-      setMessageStatus(
-        'Произошла ошибка сервера. Попробуйте ввести изменения позднее'
-      );
-    } else if (statusRequest === 400) {
-      setMessageStatus('Некорректно введены данные');
-    } else {
-      setMessageStatus('');
-    }
-  }
-
-  /**Отслеживание состояния ответов с сервера*/
-  useEffect(() => {
-    handleStatusRequest();
-  }, [statusRequest]);
 
   /**Функция изменения имени пользователя и проверка формы*/
   const handleChangeName = (e) => {
@@ -84,12 +64,17 @@ function Register({ onRegister, statusRequest }) {
   function handleChangePassword(e) {
     setPassword(e.target.value);
     setMessageStatus('');
-    
+
     if (!e.target.value) {
-      setPasswordlError('Поле не может быть пустым');
+      setPasswordError('Поле не может быть пустым');
+      setPasswordValid(false);
+    } else if (e.target.value.length <= 7) {
+      setPasswordError(
+        'Длина пароля не может быть меньше 8 и больше 30 символов'
+      );
       setPasswordValid(false);
     } else {
-      setPasswordlError('');
+      setPasswordError('');
       setPasswordValid(true);
     }
   }
@@ -193,7 +178,7 @@ function Register({ onRegister, statusRequest }) {
           </div>
         </fieldset>
         <span className='authorization-form__error authorization-form__error_server'>
-          {messageStatus}
+          {registerError}
         </span>
         <button
           className={`authorization-form__btn button ${
