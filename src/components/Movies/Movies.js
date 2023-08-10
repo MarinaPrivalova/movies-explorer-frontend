@@ -1,110 +1,148 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Movies.css";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import moviesApi from "../../utils/MoviesApi";
-import mainApi from "../../utils/MainApi";
+import { getAllMovies } from "../../utils/MoviesApi";
+import { getAllFilms, setToken } from "../../utils/MainApi";
+import { DISPLAY_SETTINGS, SHORT_MOVIE_DURATION } from "../../utils/constants";
 
-// Постоянная, определяющая количество отображаемых карточек на экране (вынести в константы)
-const displayOfCards = () => {
-  const display = {
-    start: 12,
-    load: 3,
-  };
+const moviesDisplay = () => {
+  const display = { ...DISPLAY_SETTINGS.default };
   if (window.innerWidth < 990) {
-    display.start = 8;
-    display.load = 2;
+    display.start = DISPLAY_SETTINGS.pad.start;
+    display.load = DISPLAY_SETTINGS.pad.load;
   }
   if (window.innerWidth < 767) {
-    display.start = 5;
-    display.load = 1;
+    display.start = DISPLAY_SETTINGS.mobile.start;
+    display.load = DISPLAY_SETTINGS.mobile.load;
   }
   return display;
 };
 
 function Movies({ loggedIn }) {
-  // Переменная отображения карточек на экране
-  const display = displayOfCards();
-  // Переменная состояния для карточек
-  const [cards, setCards] = useState([]);
-  // Переменная состояния для фильтрации карточек
-  const [filteredCards, setFilteredCards] = useState([]);
-  // Переменная поиска
-  const [searchQuery, setSearchQuery] = useState(false);
-  // Переменная состояния контейнера для карточек
-  const [displayedCards, setDisplayedCards] = useState(display.start);
-  // Переменная прелоадера
+  const display = moviesDisplay();
   const [statusPreloader, setStatusPreloader] = useState(false);
 
-  // Функция загрузки карточек
-  const loadingCards = () => {
-    const display = displayOfCards();
-    setDisplayedCards(displayedCards + display.load);
+  // Переменные состояния фильмов
+  const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [displayedMovies, setDisplayedMovies] = useState(display.start);
+
+  // Переменная поиска
+  const [searchRequest, setSearchRequest] = useState(false);
+
+  // Обновление локального хранилища при изменении состояния movies
+  useEffect(() => {
+    localStorage.setItem("local-movies", JSON.stringify(movies));
+  }, [movies]);
+
+  // Загружаем фильмы
+  const uploadMovies = () => {
+    const display = moviesDisplay();
+    setDisplayedMovies(displayedMovies + display.load);
   };
 
-  // Функция фильтрации карточек
-  const filterCards = (search) => {
-    setSearchQuery(true)
-    // Фильтр карточек по названию и продолжительности
-    const filter = (cards) => {
-      setFilteredCards(cards.filter((card) => {
-        const isNameMovie = card.nameRU.toLowerCase().includes(search.name.toLowerCase());
-        const isShortsMovie = search.isShortsMovie ? card.duration <= 40 : true;
-        return isNameMovie && isShortsMovie;
-      }))
-    }
-    if (cards.length === 0) {
-      const localMovies = JSON.parse(localStorage.getItem('local-movies') || '[]');
+  // Фильтр фильмов
+  const filterMovies = (search) => {
+    setSearchRequest(true);
+
+    // Фильтр фильмов по названию и продолжительности
+    const filter = (movies) => {
+      setFilteredMovies(
+        movies.filter((movie) => {
+          const isMovieTitle = movie.nameRU
+            .toLowerCase()
+            .includes(search.name.toLowerCase());
+          const isShortMovie = search.isShortMovie
+            ? movie.duration <= SHORT_MOVIE_DURATION
+            : true;
+          return isMovieTitle && isShortMovie;
+        })
+      );
+    };
+    if (movies.length === 0) {
+      const localMovies = JSON.parse(
+        localStorage.getItem("local-movies") || "[]"
+      );
 
       if (localMovies.length === 0) {
-        const token = localStorage.getItem('jwt');
-        mainApi.setToken(token);
+        console.log("Шаг1 localMovies.length", JSON.stringify(localMovies));
+
+        const token = localStorage.getItem("jwt");
+        setToken(token);
         setStatusPreloader(true);
-        Promise.all([moviesApi.getAllMovies(), mainApi.getAllCards()])
-          .then(([beatCards, { data: localCards }]) => {
-            const combinedCards = beatCards.map(card => {
-              const localCard = localCards.find((localCard) => localCard.movieId === card.id);
-              // Задаем единое название для карточек с битфильма и карточек с нашего сервера
-              card._id = localCard !== undefined ? localCard._id : '';
-              card.movieId = card.id;
-              card.thumbnail = `https://api.nomoreparties.co/${card.image.url}`;
-              card.saved = localCard !== undefined;
-              return card;
-            })
-            setCards(combinedCards);
-            filter(combinedCards);
-            // Сохраняем фильмы с Битфильма в localStorage
-            localStorage.setItem('local-movies', JSON.stringify(combinedCards));
+        Promise.all([getAllMovies(), getAllFilms()]).then(
+          ([beatFilms, localFilms]) => {
+            console.log(
+              "Шаг2 beatFilms after Promise:",
+              beatFilms,
+              "data:",
+              localFilms
+            );
+
+            const mixedFilms = beatFilms.map((movie) => {
+              const localMovie = localFilms.find(
+                (localMovie) => localMovie.movieId === movie.id
+              );
+
+              console.log("Шаг3 localMovie", localMovie);
+
+              // Задаем единое название для всех фильмов
+              movie._id = localMovie !== undefined ? localMovie._id : "";
+              movie.movieId = movie.id;
+              movie.thumbnail = `https://api.nomoreparties.co/${movie.image.url}`;
+              movie.saved = localMovie !== undefined;
+              return movie;
+            });
+            console.log("Шаг4 movie ID", mixedFilms);
+            setMovies(mixedFilms);
+
+            filter(mixedFilms);
+
+            // Сохраняем отредактированный список фильмов в локальное хранилище
+            localStorage.setItem("local-movies", JSON.stringify(mixedFilms));
+            // Сохраняем список сохраненных фильмов в локальное хранилище
+            localStorage.setItem(
+              "saved-movies",
+              JSON.stringify(mixedFilms.filter((movie) => movie.saved))
+            );
+
+            console.log("Шаг5 mixedFilms", mixedFilms);
             setStatusPreloader(false);
-          });
+          }
+        );
       } else {
-        setCards(localMovies);
+        setMovies(localMovies);
         filter(localMovies);
+        console.log("Шаг6 localMovies", localMovies);
       }
     } else {
-      filter(cards);
-      setDisplayedCards(display.start)
+      filter(movies);
+      setDisplayedMovies(display.start);
+      console.log("Шаг7 setDisplayedMovies", movies);
     }
-  }
+  };
 
   return (
     <>
       <Header loggedIn={loggedIn} />
       <main className="movies">
-        <SearchForm filterCards={filterCards} page="movies" />
+        <SearchForm filterMovies={filterMovies} page="movies" />
         <MoviesCardList
-          cards={filteredCards.filter((_, i) => i < displayedCards)}
-          searchQuery={searchQuery}
-          statusPreloader={statusPreloader}
+          movies={filteredMovies.filter((_, i) => i < displayedMovies)}
+          searchQuery={searchRequest}
+          loadingStatus={statusPreloader}
         />
-        {filteredCards.length > displayedCards && (
-          <div className="movies__add-button">
-            <button className="movies__button" onClick={loadingCards}>
-              Ещё
-            </button>
-          </div>
+        {filteredMovies.length > displayedMovies && (
+          <button
+            className="movies__add-cards button"
+            type="button"
+            onClick={uploadMovies}
+          >
+            Ещё
+          </button>
         )}
       </main>
       <Footer />

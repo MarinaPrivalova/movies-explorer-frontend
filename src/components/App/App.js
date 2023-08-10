@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import './App.css';
-import Main from '../Main/Main';
-import Movies from '../Movies/Movies';
-import SavedMovies from '../SavedMovies/SavedMovies';
-import Register from '../Register/Register';
-import Login from '../Login/Login';
-import Profile from '../Profile/Profile';
-import NotFound from '../NotFound/NotFound';
-import mainApi from '../../utils/MainApi';
-import * as apiAuth from '../../utils/apiAuth';
+import React, { useState, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import "./App.css";
+import Main from "../Main/Main";
+import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
+import NotFound from "../NotFound/NotFound";
+import {
+  register,
+  authorize,
+  getUserInfo,
+  updateUserInfo,
+  setToken,
+} from "../../utils/MainApi";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -25,11 +30,10 @@ function App() {
 
   /**Получить токен*/
   function checkToken() {
-    const token = localStorage.getItem('jwt');
-    mainApi.setToken(token);
+    const token = localStorage.getItem("jwt");
+    setToken(token);
     if (token) {
-      mainApi
-        .getUserInfo()
+      getUserInfo()
         .then((user) => {
           setCurrentUser(user);
           setLoggedIn(true);
@@ -37,14 +41,14 @@ function App() {
         .catch((err) => {
           setLoggedIn(false);
           logOut();
-          if (err === 'Ошибка: 401') {
+          if (err === "Ошибка: 401") {
             setLoginError(
-              'При авторизации произошла ошибка. Токен не передан или передан не в том формате.'
+              "При авторизации произошла ошибка. Токен не передан или передан не в том формате."
             );
           }
-          if (err === 'Ошибка: 403') {
+          if (err === "Ошибка: 403") {
             setLoginError(
-              'При авторизации произошла ошибка. Переданный токен некорректен.'
+              "При авторизации произошла ошибка. Переданный токен некорректен."
             );
           }
         });
@@ -61,87 +65,84 @@ function App() {
   function handleRegister(regData) {
     const email = regData.email;
     const password = regData.password;
-    apiAuth
-      .register(regData)
+    register(regData)
       .then((res) => {
         handleLogin({ email, password });
-        navigate('/movies');
+        navigate("/movies");
       })
       .catch((err) => {
         setLoggedIn(false);
-        if (err === 'Ошибка: 409') {
-          setRegisterError('Пользователь с таким email уже существует');
+        if (err === "Ошибка: 409") {
+          setRegisterError("Пользователь с таким email уже существует");
         }
-        if (err === 'Ошибка: 500') {
-          setRegisterError('На сервере произошла ошибка');
+        if (err === "Ошибка: 500") {
+          setRegisterError("На сервере произошла ошибка");
         }
       });
   }
 
   /**Авторизация пользователя*/
   function handleLogin(loginData) {
-    apiAuth
-      .login(loginData)
+    authorize(loginData)
       .then((res) => {
-        localStorage.setItem('jwt', res.token);
-        navigate('/movies');
+        localStorage.setItem("jwt", res.token);
+        navigate("/movies");
         setLoggedIn(true);
       })
       .catch((err) => {
         setLoggedIn(false);
-        if (err === 'Ошибка: 401') {
-          setLoginError('Вы ввели неправильный логин или пароль');
+        if (err === "Ошибка: 401") {
+          setLoginError("Вы ввели неправильный логин или пароль");
         }
-        if (err === 'Ошибка: 500') {
-          setLoginError('На сервере произошла ошибка');
+        if (err === "Ошибка: 500") {
+          setLoginError("На сервере произошла ошибка");
+        }
+      });
+  }
+
+  /**Изменить данные пользователя*/
+  function handleUpdateUser(userData) {
+    updateUserInfo(userData)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        setProfileMessage("Данные успешно обновлены");
+      })
+      .catch((err) => {
+        if (err === "Ошибка: 409") {
+          setProfileMessage("Пользователь с таким email уже существует");
+        } else {
+          setProfileMessage("При обновлении профиля произошла ошибка");
         }
       });
   }
 
   /**Выйти из аккаунта*/
   function logOut() {
+    setToken(null);
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser({});
-    navigate('/');
-    mainApi.setToken('');
-    console.log('Выход');
-  }
-
-  /**Изменить данные пользователя*/
-  function handleUpdateUser(userData) {
-    mainApi
-      .updateUserInfo(userData)
-      .then((newUser) => {
-        setCurrentUser(newUser);
-        setProfileMessage('Данные успешно обновлены');
-      })
-      .catch((err) => {
-        if (err === 'Ошибка: 409') {
-          setProfileMessage('Пользователь с таким email уже существует');
-        } else {
-          setProfileMessage('При обновлении профиля произошла ошибка');
-        }
-      });
+    navigate("/");
+    console.log("Выход");
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className='app'>
+      <div className="app">
         <Routes>
-          <Route path='/' element={<Main loggedIn={loggedIn} />} />
+          <Route path="/" element={<Main loggedIn={loggedIn} />} />
           <Route
-            path='/movies'
+            path="/movies"
             element={<ProtectedRoute element={Movies} loggedIn={loggedIn} />}
           />
           <Route
-            path='/saved-movies'
+            path="/saved-movies"
             element={
               <ProtectedRoute element={SavedMovies} loggedIn={loggedIn} />
             }
           />
           <Route
-            path='/profile'
+            path="/profile"
             element={
               <ProtectedRoute
                 element={Profile}
@@ -149,15 +150,16 @@ function App() {
                 onUpdateUser={handleUpdateUser}
                 logOut={logOut}
                 profileMessage={profileMessage}
+                setCurrentUser={setCurrentUser}
               />
             }
           />
           <Route
-            path='/signin'
+            path="/signin"
             element={<Login onLogin={handleLogin} loginError={loginError} />}
           />
           <Route
-            path='/signup'
+            path="/signup"
             element={
               <Register
                 onRegister={handleRegister}
@@ -165,7 +167,7 @@ function App() {
               />
             }
           />
-          <Route path='*' element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </CurrentUserContext.Provider>

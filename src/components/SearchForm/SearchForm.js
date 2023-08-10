@@ -1,36 +1,35 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./SearchForm.css";
 
-function SearchForm(props) {
-  const { filterCards, page } = props;
-
-  // Переменная состояния кнопки поиска - активна/ не активна
+function SearchForm({ filterMovies, required = true, page }) {
+  // Переменная состояния кнопки поиска
   const [isDisabledButton, setIsDisabledButton] = useState(true);
   // Переменная состояния ошибки
-  const [error, setError] = useState({ name: "", isShortsMovie: "" });
-  // Переменная состония поля input поиска
-  const [value, setValue] = useState({ name: "", isShortsMovie: false });
+  const [error, setError] = useState({ name: "", isShortMovie: "" });
+  // Переменная состония поисковой строки
+  const [value, setValue] = useState({ name: "", isShortMovie: false });
 
   const formRef = useRef(null);
 
-  // Эффект отслеживания состояния поля input поиска
   useEffect(() => {
     const searchMovies = JSON.parse(localStorage.getItem("search-movies"));
     if (searchMovies) {
       setValue(searchMovies);
-      filterCards(searchMovies);
+      filterMovies(searchMovies);
     }
     if (page === "saved-movies") {
-      filterCards({ name: "", isShortsMovie: false });
-      setValue({ name: "", isShortsMovie: false });
+      filterMovies({ name: "", isShortMovie: false });
+      setValue({ name: "", isShortMovie: false });
     }
   }, []);
 
-  // Функция изменения input поиска
-  const handleChange = (e) => {
-    const { name, value: inputValue, validationMessage } = e.target;
+  const handleInputChange = (evt) => {
+    const { name, value: inputValue, validationMessage } = evt.target;
 
-    const updatedValue = { ...value, [name]: inputValue };
+    const updatedValue = {
+      ...value,
+      [name]: inputValue,
+    };
     if (page === "movies") {
       localStorage.setItem("search-movies", JSON.stringify(updatedValue));
     }
@@ -39,63 +38,63 @@ function SearchForm(props) {
     setIsDisabledButton(!formRef.current.checkValidity());
   };
 
-  // Функция отработки чекбокса
-  const handleCheckbox = (e) => {
-    const { name, checked } = e.target;
+  const handleCheckbox = (evt) => {
+    const { name, checked } = evt.target;
     const updatedValue = { ...value, [name]: checked };
 
     if (page === "movies") {
       localStorage.setItem("search-movies", JSON.stringify(updatedValue));
     }
     setValue(updatedValue);
-    filterCards(updatedValue);
+    filterMovies(updatedValue);
   };
 
-  // Функция отправки формы
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    filterCards(value);
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    filterMovies(value);
   };
 
   return (
-    <form
-      className="seachform"
-      onSubmit={handleSubmit}
-      ref={formRef}
-      noValidate
-    >
-      <div className="seachform__input-container">
+    <section className="seachform">
+      <form
+        className="seachform__input-container"
+        onSubmit={handleSubmit}
+        ref={formRef}
+        noValidate
+      >
         <input
           className="seachform__input"
           placeholder="Фильм"
-          required
-          onChange={handleChange}
+          required={required}
+          onChange={handleInputChange}
           value={value.name}
           name="name"
         ></input>
         <button
-          className="seachform__btn button"
+          className={`seachform__btn button ${
+            isDisabledButton ? "searchform__btn_disabled" : ""
+          }`}
+          disabled={isDisabledButton}
           type="submit"
           onClick={handleSubmit}
         >
           Найти
         </button>
-      </div>
-      <span className="searchform__span"> {error.name}</span>
+      </form>
+      <span className="searchform__span">{error.name}</span>
       <div className="seachform__checkbox-container">
         <input
           type="checkbox"
           className="seachform__checkbox"
           id="seachform__checkbox"
-          value="yes"
           onChange={handleCheckbox}
-          checked={value.isShortsMovie}
+          checked={value.isShortMovie}
         ></input>
         <label className="seachform__label link" htmlFor="seachform__checkbox">
           Короткометражки
         </label>
       </div>
-    </form>
+    </section>
   );
 }
 

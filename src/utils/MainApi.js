@@ -1,76 +1,73 @@
-class MainApi {
-  constructor({ url, headers }) {
-    this._url = url;
-    this._headers = headers;
-  }
+export const BASE_URL = 'http://localhost:3000';
+//export const BASE_URL = 'https://api.privalovama.diploma.nomoreparties.sbs';
 
-  /**Обработать ответ*/
-  _handleReply(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: '',
+};
 
-  /**Установить токен*/
-  setToken(token) {
-    this._headers.Authorization = `Bearer ${token}`;
+const handleResponce = (res) => {
+  if (res.ok) {
+    return res.json();
   }
+  return Promise.reject(res.status);
+};
 
-  /**Загрузить данные пользователя с сервера*/
-  getUserInfo() {
-    return fetch(`${this._url}/users/me`, { headers: this._headers })
-      .then(this._handleReply)
-  }
+export const setToken = (token) => {
+  headers.Authorization = `Bearer ${token}`;
+};
 
-  /**Редактировать профиль*/
-  updateUserInfo({ name, email }) {
-    return fetch(`${this._url}/users/me`,
-      {
-        method: 'PATCH',
-        headers: this._headers,
-        body: JSON.stringify({ name, email })
-      })
-      .then(this._handleReply)
-  }
+export const register = (data) => {
+  return fetch(`${BASE_URL}/signup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then(handleResponce);
+};
 
-  /**Получить все карточки*/
-  getAllCards() {
-    return fetch(`${this._url}/movies`, {
-      headers: this._headers
-    })
-      .then(this._handleResponce)
-  }
+export const authorize = (data) => {
+  return fetch(`${BASE_URL}/signin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then(handleResponce);
+};
 
-  /**Удалить карточку*/
-  deleteMovie(id) {
-    return fetch(`${this._url}/movies/${id}`,
-      {
-        method: 'DELETE',
-        headers: this._headers,
-      })
-      .then(this._handleResponce)
-  }
+export const getUserInfo = () => {
+  return fetch(`${BASE_URL}/users/me`, {
+    headers,
+  }).then(handleResponce);
+};
 
-  /**Сохранить карточку*/
-  savedMovie(card) {
-    return fetch(`${this._url}/movies`,
-      {
-        method: 'POST',
-        headers: this._headers,
-        body: JSON.stringify(card)
-      })
-      .then(this._handleResponce)
-  }
+export const updateUserInfo = ({ name, email }) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify({ email, name }),
+  }).then(handleResponce);
+};
+
+export const savedMovie = (movie) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(movie),
+  }).then(handleResponce);
+};
+
+export const deleteMovie = (id) => {
+  return fetch(`${BASE_URL}/movies/${id}`, {
+    method: 'DELETE',
+    headers,
+  }).then(handleResponce);
+};
+
+export const getAllFilms = () => {
+  return fetch(`${BASE_URL}/movies`, {
+    headers,
+  }).then(handleResponce);
 }
-
-const mainApi = new MainApi({
-  url: 'http://localhost:3000',
-  //url: 'https://api.privalovama.diploma.nomoreparties.sbs',
-  headers: {
-    'content-type': 'application/json',
-    Authorization: '',
-  },
-});
-
-export default mainApi;

@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import Header from '../Header/Header';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -22,6 +23,8 @@ function Profile(props) {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   /**Переменная состояния успешного результата*/
   const [updateForm, setUpdateForm] = useState();
+
+  const navigate = useNavigate();
 
   /**После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.*/
   useEffect(() => {
@@ -70,8 +73,8 @@ function Profile(props) {
     }
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
     onUpdateUser({ name, email }, setUpdateForm);
     setInitChange(false);
   }

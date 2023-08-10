@@ -1,24 +1,17 @@
 import React from "react";
 import "./MoviesCardList.css";
-import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
+import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({
-  cards,
-  searchQuery,
-  statusPreloader,
-}) {
+function MoviesCardList({ movies, searchRequest, statusPreloader }) {
   return (
     <section className="moviescardlist">
       {statusPreloader && <Preloader />}
       <ul className="moviescardlist__list">
-        {cards.map((card) => (
-          <MoviesCard
-            key={card.movieId}
-            card={card}
-          />
+        {movies.map((movie) => (
+          <MoviesCard key={movie.movieId} movie={movie} />
         ))}
-        {cards.length === 0 && searchQuery && !statusPreloader && (
+        {movies.length === 0 && searchRequest && !statusPreloader && (
           <li>
             <span className="moviescardlist__text">Ничего не найдено</span>
           </li>
