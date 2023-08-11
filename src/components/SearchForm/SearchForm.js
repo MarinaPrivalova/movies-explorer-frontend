@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import "./SearchForm.css";
 
 function SearchForm({ filterMovies, required = true, page }) {
-  // Переменная состояния кнопки поиска
+  /**переменная состояния кнопки поиска*/
   const [isDisabledButton, setIsDisabledButton] = useState(true);
-  // Переменная состояния ошибки
-  const [error, setError] = useState({ name: "", isShortMovie: "" });
-  // Переменная состония поисковой строки
-  const [value, setValue] = useState({ name: "", isShortMovie: false });
+  /**переменная состояния ошибки*/
+  const [error, setError] = useState({ name: "", shortMovie: "" });
+  /*Переменная состония поисковой строки*/
+  const [value, setValue] = useState({ name: "", shortMovie: false });
 
   const formRef = useRef(null);
 
@@ -18,8 +18,8 @@ function SearchForm({ filterMovies, required = true, page }) {
       filterMovies(searchMovies);
     }
     if (page === "saved-movies") {
-      filterMovies({ name: "", isShortMovie: false });
-      setValue({ name: "", isShortMovie: false });
+      filterMovies({ name: "", shortMovie: false });
+      setValue({ name: "", shortMovie: false });
     }
   }, []);
 
@@ -87,8 +87,9 @@ function SearchForm({ filterMovies, required = true, page }) {
           type="checkbox"
           className="seachform__checkbox"
           id="seachform__checkbox"
+          name="shortMovie"
           onChange={handleCheckbox}
-          checked={value.isShortMovie}
+          checked={value.shortMovie}
         ></input>
         <label className="seachform__label link" htmlFor="seachform__checkbox">
           Короткометражки

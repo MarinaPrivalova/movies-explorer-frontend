@@ -28,7 +28,7 @@ function App() {
 
   const navigate = useNavigate();
 
-  /**Получить токен*/
+  /**получить токен*/
   function checkToken() {
     const token = localStorage.getItem("jwt");
     setToken(token);
@@ -61,7 +61,7 @@ function App() {
     checkToken();
   }, [loggedIn]);
 
-  /**Зарегистрировать пользователя*/
+  /**зарегистрировать пользователя*/
   function handleRegister(regData) {
     const email = regData.email;
     const password = regData.password;
@@ -81,7 +81,7 @@ function App() {
       });
   }
 
-  /**Авторизация пользователя*/
+  /**авторизация пользователя*/
   function handleLogin(loginData) {
     authorize(loginData)
       .then((res) => {
@@ -100,7 +100,7 @@ function App() {
       });
   }
 
-  /**Изменить данные пользователя*/
+  /**изменить данные пользователя*/
   function handleUpdateUser(userData) {
     updateUserInfo(userData)
       .then((newUser) => {
@@ -116,7 +116,7 @@ function App() {
       });
   }
 
-  /**Выйти из аккаунта*/
+  /**выйти из аккаунта*/
   function logOut() {
     setToken(null);
     localStorage.clear();

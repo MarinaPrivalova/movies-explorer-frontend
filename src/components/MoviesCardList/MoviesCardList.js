@@ -6,17 +6,20 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 function MoviesCardList({ movies, searchRequest, statusPreloader }) {
   return (
     <section className="moviescardlist">
-      {statusPreloader && <Preloader />}
-      <ul className="moviescardlist__list">
-        {movies.map((movie) => (
-          <MoviesCard key={movie.movieId} movie={movie} />
-        ))}
-        {movies.length === 0 && searchRequest && !statusPreloader && (
-          <li>
-            <span className="moviescardlist__text">Ничего не найдено</span>
-          </li>
-        )}
-      </ul>
+      {statusPreloader ? (
+        <Preloader />
+      ) : (
+        <ul className="moviescardlist__list">
+          {movies.map((movie) => (
+            <MoviesCard key={movie.movieId} movie={movie} />
+          ))}
+          {movies.length === 0 && searchRequest && !statusPreloader && (
+            <li>
+              <span className="moviescardlist__text">Ничего не найдено</span>
+            </li>
+          )}
+        </ul>
+      )}
     </section>
   );
 }

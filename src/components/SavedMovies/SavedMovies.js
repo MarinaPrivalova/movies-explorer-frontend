@@ -5,13 +5,13 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-function SavedMovies(props) {
+function SavedMovies({ loggedIn }) {
   return (
     <>
-      <Header loggedIn={props.loggedIn} />
+      <Header loggedIn={loggedIn} />
       <main className="savedmovies">
         <SearchForm />
-        <MoviesCardList cards={props.cards} />
+        <MoviesCardList/>
       </main>
       <Footer />
     </>
