@@ -22,8 +22,8 @@ function Navigation({ loggedIn }) {
     <nav className={navigationClass}>
 
       {loggedIn && <div className='navigation-menu'>
-        <NavLink to='/movies' className='navigation-menu__title navigation-menu__title_active link'>Фильмы</NavLink>
-        <NavLink to='/saved-movies' className='navigation-menu__title link'>Сохранённые фильмы</NavLink>
+        <NavLink to='/movies' className={({ isActive }) => `navigation-menu__title link ${isActive ? 'navigation-menu__title_active' : ''}`}>Фильмы</NavLink>
+        <NavLink to='/saved-movies' className={({ isActive }) => `navigation-menu__title link ${isActive ? 'navigation-menu__title_active' : ''}`}>Сохранённые фильмы</NavLink>
         <NavLink to='/profile' className='navigation-account'>
           <p className='navigation-account__link link'>Аккаунт</p>
           <img className='navigation-account__icon link' src={headerIcon} alt='Иконка входа в аккаунт'></img>

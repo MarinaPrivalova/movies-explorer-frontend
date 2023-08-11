@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import "./App.css";
-import Main from "../Main/Main";
-import Movies from "../Movies/Movies";
-import SavedMovies from "../SavedMovies/SavedMovies";
-import Register from "../Register/Register";
-import Login from "../Login/Login";
-import Profile from "../Profile/Profile";
-import NotFound from "../NotFound/NotFound";
 import {
-  register,
   authorize,
   getUserInfo,
-  updateUserInfo,
+  register,
   setToken,
+  updateUserInfo,
 } from "../../utils/MainApi";
+import Login from "../Login/Login";
+import Main from "../Main/Main";
+import Movies from "../Movies/Movies";
+import NotFound from "../NotFound/NotFound";
+import Profile from "../Profile/Profile";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import Register from "../Register/Register";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import "./App.css";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -72,10 +72,13 @@ function App() {
       })
       .catch((err) => {
         setLoggedIn(false);
-        if (err === "Ошибка: 409") {
+        if (err === 400) {
+          setRegisterError("Некорректнo введены данные");
+        }
+        if (err === 409) {
           setRegisterError("Пользователь с таким email уже существует");
         }
-        if (err === "Ошибка: 500") {
+        if (err === 500) {
           setRegisterError("На сервере произошла ошибка");
         }
       });
@@ -91,10 +94,10 @@ function App() {
       })
       .catch((err) => {
         setLoggedIn(false);
-        if (err === "Ошибка: 401") {
+        if (err === 400 || err === 401) {
           setLoginError("Вы ввели неправильный логин или пароль");
         }
-        if (err === "Ошибка: 500") {
+        if (err === 500) {
           setLoginError("На сервере произошла ошибка");
         }
       });
@@ -108,7 +111,7 @@ function App() {
         setProfileMessage("Данные успешно обновлены");
       })
       .catch((err) => {
-        if (err === "Ошибка: 409") {
+        if (err === 409) {
           setProfileMessage("Пользователь с таким email уже существует");
         } else {
           setProfileMessage("При обновлении профиля произошла ошибка");
@@ -156,7 +159,7 @@ function App() {
           />
           <Route
             path="/signin"
-            element={<Login onLogin={handleLogin} loginError={loginError} />}
+            element={<Login onLogin={handleLogin} loginError={loginError} setLoginError={setLoginError}/>}
           />
           <Route
             path="/signup"
@@ -164,6 +167,7 @@ function App() {
               <Register
                 onRegister={handleRegister}
                 registerError={registerError}
+                setRegisterError={setRegisterError}
               />
             }
           />

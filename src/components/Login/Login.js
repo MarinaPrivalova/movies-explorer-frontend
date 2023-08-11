@@ -3,7 +3,7 @@ import Logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 import './Login.css';
 
-function Login({ onLogin, loginError }) {
+function Login({ onLogin, loginError, setLoginError }) {
   /**Переменные состояния полей почты и пароля*/
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,6 +22,7 @@ function Login({ onLogin, loginError }) {
   function handleChangeEmail(e) {
     setEmail(e.target.value);
     setMessageStatus('');
+    setLoginError('');
     const re = /^([\w]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
     if (e.target.value.length === 0) {
@@ -40,6 +41,7 @@ function Login({ onLogin, loginError }) {
   function handleChangePassword(e) {
     setPassword(e.target.value);
     setMessageStatus('');
+    setLoginError('');
 
     if (!e.target.value) {
       setPasswordError('Поле не может быть пустым');
