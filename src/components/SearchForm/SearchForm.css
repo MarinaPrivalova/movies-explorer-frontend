@@ -13,7 +13,6 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #424242;
-  margin-bottom: 33px;
 }
 
 .seachform__input {
@@ -21,7 +20,7 @@
   padding: 0;
   width: 89%;
   padding-bottom: 13px;
-  color: #8b8b8b;
+  color: #fff;
   font-size: 28px;
   font-weight: 500;
   line-height: normal;
@@ -31,7 +30,21 @@
 
 .seachform__input:focus {
   outline: none;
-  opacity: .4;
+  opacity: 0.4;
+}
+
+.searchform__error {
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+  display: block;
+  max-height: 30px;
+  max-width: 396px;
+  color: #ee3465;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+  align-self: flex-start;
 }
 
 .seachform__btn {
@@ -50,10 +63,37 @@
   cursor: pointer;
 }
 
-.seachform__checkbox-conteiner {
+.searchform__btn_disabled {
+  cursor: default;
+  background-color: #8b8b8b;
+  color: #303030;
+}
+
+.searchform__btn_disabled:hover {
+  transition: none;
+  opacity: 1;
+  cursor: default;
+}
+
+.searchform__span {
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+  display: block;
+  max-height: 30px;
+  max-width: 396px;
+  color: #ee3465;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+  align-self: flex-start;
+}
+
+.seachform__checkbox-container {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 33px;
 }
 
 .seachform__checkbox {
@@ -74,7 +114,7 @@
 
 .seachform__checkbox + .seachform__label::before {
   content: "";
-  background-image: url("../../images/smalltumboff.svg");
+  background-image: url("../../images/smalltumboff-noactive.svg");
   display: inline-block;
   width: 36px;
   height: 20px;
@@ -89,9 +129,9 @@
 }
 
 .seachform__checkbox:checked + .seachform__label::before {
+  background-image: url("../../images/smalltumboff.svg");
   width: 36px;
   height: 20px;
-  background-image: url("../../images/smalltumboff-noactive.svg");
 }
 
 @media screen and (max-width: 800px) {
@@ -102,7 +142,7 @@
   .seachform__input-container {
     margin-bottom: 30px;
   }
-  .seachform__checkbox-conteiner {
+  .seachform__checkbox-container {
     justify-content: flex-end;
   }
   .seachform__checkbox + .seachform__label {
@@ -129,7 +169,7 @@
   .seachform__btn {
     margin-bottom: 9px;
   }
-  .seachform__checkbox-conteiner {
+  .seachform__checkbox-container {
     justify-content: center;
   }
   .seachform__checkbox + .seachform__label {
