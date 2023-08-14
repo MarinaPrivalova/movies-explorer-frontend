@@ -30,5 +30,5 @@
 
 ## Ссылки на проект
 
-Pull-request:
+Pull-request: https://github.com/MarinaPrivalova/movies-explorer-frontend/pull/2
 Frontend: https://privalovama.diploma.nomoreparties.sbs;
