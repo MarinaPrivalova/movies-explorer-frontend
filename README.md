@@ -31,4 +31,4 @@
 ## Ссылки на проект
 
 Pull-request:
-Frontend:
+Frontend: https://privalovama.diploma.nomoreparties.sbs;
